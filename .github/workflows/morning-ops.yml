@@ -1,0 +1,31 @@
+name: Morning Ops Agent
+
+on:
+  schedule:
+    - cron: "0 9 * * *"   # daily at 9 AM UTC
+  workflow_dispatch:      # manual trigger button
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install project
+        run: pip install .
+
+      - name: Run Morning Ops Agent
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+        run: python -m morning_ops_agent.main
