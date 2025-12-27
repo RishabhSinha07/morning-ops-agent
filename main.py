@@ -1,17 +1,12 @@
 from dotenv import load_dotenv
-
-from tools.location import get_location
 load_dotenv()
 
 from agents import agent
 
 
 
-def run():
-    prompt = (
-        f"Create my morning commute briefing for the city based on user location. "
-        "Include weather, what to wear, and any commute disruptions."
-    )
+def run(city):
+    prompt = f"I am in city : {city}, can you provide me todays analysis?"
 
     _agent = agent.get_agent()
 
@@ -21,4 +16,4 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    run("Quincy, MA")

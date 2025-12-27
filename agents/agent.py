@@ -1,7 +1,6 @@
 from dotenv import load_dotenv
 
 from prompts.system import SYSTEM_PROMPT
-from tools.location import get_location
 from tools.news import get_local_weather_news
 from tools.weather import get_weather_summary
 
@@ -33,27 +32,13 @@ def get_city_weather_news(city: str) -> str:
     else:
         return f"Weather news unavailable: {result['error']}"
 
-@tool(description="Get user location")
-def get_user_location() -> str:
-    """
-    Fetches the user's current location.
-    """
-    result = get_location()
-    if result["ok"]:
-        return result["data"]
-    else:
-        return f"Location unavailable: {result['error']}"
-
-
-
-
 
 def get_agent():
     from langchain.agents import create_agent
 
     return create_agent(
         model="gpt-5-nano",
-        tools=[get_city_weather, get_city_weather_news, get_user_location],
+        tools=[get_city_weather, get_city_weather_news],
         system_prompt=SYSTEM_PROMPT
     )
 
