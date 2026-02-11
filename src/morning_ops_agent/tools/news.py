@@ -1,6 +1,6 @@
 import os
 from tavily import TavilyClient
-from tools.types import ToolResult
+from morning_ops_agent.tools.types import ToolResult
 
 def get_local_weather_news(city: str) -> ToolResult:
     try:
